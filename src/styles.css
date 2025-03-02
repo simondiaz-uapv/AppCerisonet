@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #1E6F50;  /* Vert principal légèrement plus foncé */
+    --secondary-color: #4BAF7E; /* Vert complémentaire plus doux */
+    --text-color: #F1F7ED; /* Texte clair pour un bon contraste */
+    --background-color: #D9EAD3; /* Vert pastel, plus doux */
+    --hover-color: #3E8E64; /* Couleur d'effet au survol */
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.btn-custom {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+.btn-custom:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.05);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

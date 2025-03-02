@@ -1,0 +1,26 @@
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.btn-custom {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+.btn-custom:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.05);
+}
