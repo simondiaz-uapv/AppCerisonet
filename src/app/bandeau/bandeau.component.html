@@ -4,4 +4,7 @@
     <span *ngIf="isSessionActive">
       <mat-icon (click)="logout()">logout</mat-icon>
     </span>
-  </div>
+    <div  *ngIf="isSessionActive">
+    <h2 class="text">Bonjour {{nom}} {{prenom}} !</h2>
+    </div>
+</div>

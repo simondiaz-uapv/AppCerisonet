@@ -8,11 +8,13 @@ import { BandeauComponent } from './bandeau/bandeau.component';
 import { BandeauNotifComponent } from './bandeau-notif/bandeau-notif.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { MessageComponent } from './message/message.component';
+import { CommentaireComponent } from './commentaire/commentaire.component';
 
 @NgModule({
   declarations: [
     ProfilComponent,
-    MurComponent,
   ],
   imports: [
     BandeauNotifComponent,
@@ -22,6 +24,10 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     FormsModule,
     HttpClientModule, 
+    MurComponent,
+    CommonModule,
+    MessageComponent,
+    CommentaireComponent
   ],
   providers: [],
 })

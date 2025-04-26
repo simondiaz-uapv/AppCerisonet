@@ -3,12 +3,13 @@ import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from '../app.component';
 import { SessionService } from '../session.service';
+import { BandeauComponent } from '../bandeau/bandeau.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    FormsModule,
+    FormsModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
@@ -22,21 +23,33 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private appComponent: AppComponent,
-    private sessionService: SessionService
+    private sessionService: SessionService,
   ) {}
 
+  /**
+   * Fonction qui va appeler le authService pour se connecter
+   * Si l'utilisateur est connecté on set les cookies et la date dans le localStorage
+   */
   onSubmit() {
     this.authService.login(this.loginModel.login, this.loginModel.password).subscribe(
       response => {
         console.log(response);
         if (response.success) {
-          this.appComponent.setNotification('Connexion réussie', true);
-          sessionStorage.setItem('user', this.loginModel.login);
-          sessionStorage.setItem('lastLoginDate', new Date().toISOString());
+          const lastLoginDate = localStorage.getItem('lastLoginDate');
+          localStorage.setItem('lastLoginDate', new Date().toISOString());
+          if (lastLoginDate) {
+            this.appComponent.setNotification(`Connexion réussie ! Dernière connexion : ${new Date(lastLoginDate).toLocaleString()}`, true);
+          } else {
+            this.appComponent.setNotification('Connexion réussie !', true);
+          }
+          document.cookie = `idSession=${response.idSession};`;
+          document.cookie = `idUser=${response.idUser};`;
+          document.cookie = `lastDate=${new Date().toISOString()};`;
+          document.cookie = `nom=${response.nom};`;
+          document.cookie = `prenom=${response.prenom};`;
           this.sessionService.setSessionActive(true);
-            document.cookie = `sessionId=${response.sessionId}; path=/; secure; HttpOnly`;
         } else {
-          this.appComponent.setNotification('Échec de la connexion', false);
+          this.appComponent.setNotification(response.statusMsg, false);
         }
       },
       error => {
@@ -45,16 +58,6 @@ export class LoginComponent {
     );
   }
 
-  onLogout() {
-    this.authService.logout().subscribe(
-      response => {
-        this.appComponent.setNotification('Déconnexion réussie', true);
-        sessionStorage.removeItem('user');
-        this.sessionService.setSessionActive(false);
-      },
-      error => {
-        this.appComponent.setNotification('Erreur lors de la déconnexion', false);
-      }
-    );
-  }
+  
+  
 }

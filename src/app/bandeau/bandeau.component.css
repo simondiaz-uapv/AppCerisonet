@@ -17,5 +17,9 @@ span{
 span:hover{
     background-color: var(--hover-color);
     transform: scale(1.05);
-    
+}
+.text {
+    margin-top: 13px;
+    display: flex;
+    align-items: center;
 }

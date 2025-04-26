@@ -5,17 +5,28 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+// Service pour la connexion et la déconnexion intéragit avec le serveur node
 export class AuthService {
-  private apiUrl = 'https://pedago.univ-avignon.fr:3227/login';
+  private apiUrlLogin = 'https://pedago.univ-avignon.fr:3227/login';
+  private apiUrlLogout = 'https://pedago.univ-avignon.fr:3227/logout';
 
   constructor(private http: HttpClient) {}
-
-  login(login: string, password: string ): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?login=${login}&password=${password}`, {});
+  /**
+   * 
+   * @param login 
+   * @param password 
+   * @returns un objet de type Observable<any> qui contient les informations de l'utilisateur
+   */
+  login(login: string, password: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrlLogin}?login=${login}&password=${password}`, {});
   }
-  
 
-  logout(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/logout`, {});
+  /**
+   * Fonction qui déconnecte l'utilisateur
+   * @param idSession 
+   * @returns un objet de type Observable<any>
+   */
+  logout(idSession: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrlLogout}?idSession=${idSession}`, {});
   }
 }

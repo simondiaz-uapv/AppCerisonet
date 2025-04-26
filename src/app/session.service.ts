@@ -6,31 +6,44 @@ import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+//Service qui intéragit avec le serveur pour savoir si la session existe dans MongoDB
 export class SessionService {
-  private apiUrl = 'https://pedago.univ-avignon.fr:3227';
-  private sessionActiveSubject = new BehaviorSubject<boolean>(false);
-  sessionActive$ = this.sessionActiveSubject.asObservable();
-
-  constructor(private http: HttpClient) {}
-
-  isSessionActive(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/checkSession`).pipe(
-      tap(response => this.sessionActiveSubject.next(response.isActive))
-    );
+  idSession = document.cookie.split(';').find(c => c.trim().startsWith('idSession='))?.split('=')[1];
+  private apiUrlSession = 'https://pedago.univ-avignon.fr:3227';
+  private sessionActiveSubject = new BehaviorSubject<boolean>(false); // Subject pour savoir si la session est active
+  sessionActive$ = this.sessionActiveSubject.asObservable(); // Observable pour savoir si la session est active
+  constructor(private http: HttpClient) {
+    this.checkSessionActive();
   }
 
-  setSessionActive(isActive: boolean): void {
+  /**
+   * Fonction qui vérifie si la session est active
+   * Si oui elle met à jour le subject sessionActiveSubject
+   * et les cookies nom et prenom
+   */
+  checkSessionActive() {
+    const idSession = this.idSession;
+    if (idSession) {
+      this.isSessionActiveBackend(idSession).subscribe(
+        response => {
+          this.sessionActiveSubject.next(response.isActive);
+          document.cookie = `nom=${response.nom};`;
+          document.cookie = `prenom=${response.prenom};`;
+        },
+        error => {
+          this.sessionActiveSubject.next(false);
+        }
+      );
+    } else {
+      this.sessionActiveSubject.next(false);
+    }
+  }
+  
+  private isSessionActiveBackend(idSession: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrlSession}/checkSession?idSession=${idSession}`);
+  }
+
+  setSessionActive(isActive: boolean) {
     this.sessionActiveSubject.next(isActive);
-  }
-
-  isSessionActiveFonction(): boolean {
-    let isActive = false;
-    this.http.get<any>(`${this.apiUrl}/checkSession`).pipe(
-      tap(response => {
-        isActive = response.isActive;
-        this.sessionActiveSubject.next(isActive);
-      })
-    ).subscribe();
-    return isActive;
   }
 }

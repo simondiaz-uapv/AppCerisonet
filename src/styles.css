@@ -1,10 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import './tailwind.css';
+
 :root {
-    --primary-color: #1E6F50;  /* Vert principal légèrement plus foncé */
-    --secondary-color: #4BAF7E; /* Vert complémentaire plus doux */
-    --text-color: #F1F7ED; /* Texte clair pour un bon contraste */
-    --background-color: #D9EAD3; /* Vert pastel, plus doux */
-    --hover-color: #3E8E64; /* Couleur d'effet au survol */
+    --primary-color: #1E6F50;  
+    --secondary-color: #4BAF7E; 
+    --text-color: #F1F7ED;
+    --background-color: #D9EAD3; 
+    --hover-color: #3E8E64; 
 }
 
 body {

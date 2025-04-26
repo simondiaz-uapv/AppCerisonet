@@ -1,0 +1,30 @@
+<div *ngIf="message._id" class="message-card p-4 rounded-lg shadow-lg">
+    <div class="message-header flex justify-between items-center mb-2">
+      <div class="user-info flex items-center">
+        <img [src]="avatar" alt="Avatar de {{ createdBy }}" class="avatar w-10 h-10 rounded-full mr-2">
+        <h3 class="message-title font-bold text-lg">{{ createdBy }}</h3>
+      </div>
+    </div>
+  
+    <div class="message-body mb-4">
+      <p>{{ body }}</p>
+      <div class="message-images mt-4">
+        <img *ngFor="let image of images" [src]="image.url" [alt]="image.title" class="message-image mt-2 rounded-lg shadow-md max-w-xs">
+      </div>
+    </div>
+  
+    <div class="message-footer flex items-center gap-4">
+      <button class="like-button px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+              (click)="likeMessage()">
+        👍 Like
+      </button>
+      <span [id]="'likes-' + _id" class="likes-count text-sm">{{ likes }} likes</span>
+    </div>
+  
+    <div class="message-comments mt-4">
+      <button class="comment-button text-gray-600 hover:underline">
+        Commentaires
+      </button>
+    </div>
+  </div>
+  
