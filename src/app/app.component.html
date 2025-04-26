@@ -1,4 +1,6 @@
 <div>
   <app-bandeau></app-bandeau>
   <app-login></app-login>
+  <app-bandeau-notif *ngIf="notification" [notification]="notification" [isSuccess]="isSuccess"></app-bandeau-notif>
+  <router-outlet></router-outlet>
 </div>

@@ -1,14 +1,14 @@
 <div class="login-container">
     <h2 class="text-center">CERISoNet</h2>
-    <form method="GET" action="https://pedago.univ-avignon.fr:3228/login">
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
         <div class="mb-3">
             <label for="login" class="form-label">Login</label>
-            <input type="text" class="form-control" id="login" name="login" required>
+            <input type="text" class="form-control" id="login" name="login" [(ngModel)]="loginModel.login" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Mot de passe</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password" [(ngModel)]="loginModel.password" required>
         </div>
-        <button type="submit" class="btn btn-custom w-100">Se connecter</button>
+        <button type="submit" class="btn btn-custom w-100" [disabled]="!loginForm.form.valid">Se connecter</button>
     </form>
 </div>
